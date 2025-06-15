@@ -5,3 +5,4 @@ pandas
 numpy
 bokeh
 seaborn
+streamlit-bokeh-events
