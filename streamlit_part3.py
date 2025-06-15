@@ -3,6 +3,685 @@ import streamlit as st
 import plotly.graph_objects as go
 from PIL import Image
 
+#####################유림 파트###################
+import pandas as pd
+import numpy as np
+import seaborn as sb
+from bokeh.plotting import figure
+from streamlit_bokeh import streamlit_bokeh
+
+# Webpage Title
+st.title("2025년 서울 시내버스 파업")
+
+# ================================================================================
+# ==========================이런 문자, 본 적 있나요?=================================
+# ================================================================================
+
+st.write("#### 이런 문자, 본 적 있나요?")
+
+st.image("이미지/message.png", use_container_width=True)
+st.write("2025년 5월 27일 밤 9시 경, 서울 시민들에게 재난 문자가 도착했습니다.")
+st.write("서울을 오가는 시내버스들이 파업에 돌입한 상황.")
+st.image("이미지/many_articles.png",use_container_width=True)
+st.write("다음 날 아침 수 백만 명의 출근길과 등굣길에 극심한 혼란이 예고되었습니다.")
+
+st.image("이미지/thinking.png", use_container_width=True)
+
+content = """
+아무 일도 없었다고요?
+그럴 겁니다.
+
+총파업 예고 후 약 4시간도 채 지나지 않아,
+서울시 버스 노조가 총파업 유보를 선언했기 때문입니다.
+덕분에 시민들의 평화로운 하루는 지켜졌죠.
+
+하지만 이게 끝은 아닙니다.
+이번 파업은 단순한 해프닝이 아니었습니다.
+
+그 뒤에는 수개월, 나아가 수년 간 쌓여 온 갈등이 자리하고 있습니다.
+
+**2023년 3월 파업부터 시작해
+노사 간의 9차례 교섭,
+반복된 조정 회의와 준법 투쟁,
+그리고 또 다른 파업 예고와 유보까지.**
+
+서울 시내버스 파업은 법적 해석과 임금 협상 문제가 맞물려 장기간 이어진 사회적 쟁점이었습니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+
+# ================================================================================
+# ==========================그동안 무슨 일이 있었던 걸까요?=================================
+# ============================================================================================
+st.markdown("#### 그동안 무슨 일이 있었던 걸까요?")
+st.write("아래 타임라인에서 그 흐름을 정리해보았습니다.")
+
+# 타임라인 표 시작************************************************************************************
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.dates import date2num, DateFormatter
+import numpy as np
+
+
+st.markdown("###### 시점별 사건 타임라인 표")
+st.markdown(
+    """
+    <style>
+    /* 1) 맨 왼쪽 인덱스(0,1,2…) 열 감추기 */
+    .stTable table th:first-child,
+    .stTable table td:first-child {
+        display: none;
+    }
+
+    /* 2) 헤더 스타일 (초록 배경, 흰 글씨, 크기) */
+    .stTable table th {
+        background-color: #53b332 !important;
+        color: white !important;
+        font-size: 16px !important;
+        text-align: center;
+        padding: 8px !important;
+    }
+
+    /* 3) 데이터 셀 스타일 (글씨 크기, 여백) */
+    .stTable table td {
+        font-size: 14px !important;
+        padding: 8px !important;
+        vertical-align: top;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+# ————————————————————————————————
+
+# 2) 데이터 준비
+events = [
+    {"시점": "2024-03-27",
+     "사건": "노사 조정 회의 → **협상 결렬**"},
+    {"시점": "2024-03-28",
+     "사건": "**오전 4시 30분, 첫 파업 돌입** → 서울 시내버스 97.6% 운행 중단"},
+    {"시점": "2024-03-28",
+     "사건": "**오후 3시**, 임금 4.48% 인상+명절 수당 65만 원 합의 → **정상 운행 복귀**"},
+    {"시점": "2024-12 ~ 2025-05",
+     "사건": "**9차례 교섭** 이어지나 **최종 합의 실패**"},
+    {"시점": "2025-04-30",
+     "사건": "**준법투쟁 전개** → **연휴 기간 정상 복귀**"},
+    {"시점": "2025-05-07",
+     "사건": "**준법 투쟁 재개**"},
+    {"시점": "2025-05-27",
+     "사건": "**노사 교섭 최종 결렬**"},
+    {"시점": "2025-05-28",
+     "사건": "**오전 12시, 총파업 돌입 예고**"},
+    {"시점": "2025-05-28",
+     "사건": "**오전 4시, 총파업 즉시 유보**"},
+]
+
+df = pd.DataFrame(events)
+
+# 3) 인덱스 없이 테이블 출력
+st.table(df)
+
+# 타임라인 표 끝************************************************************************************
+
+
+content = """
+
+불과 몇 시간 안에 파업을 예고했다가 유보했다가…
+노조 관계자는 이렇게 말합니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+quote = """
+*“파업을 해도 서울시와 사측의 입장이 달라지지 않을 것이란 확신이 들어
+무의미한 파업이 될 것 같았다”*
+"""
+
+st.markdown(
+    f"""
+<blockquote style="margin: 1em 2em; padding: 0.5em 1em; border-left: 4px solid #bbb; color: #555;">
+{quote}
+</blockquote>
+""",
+    unsafe_allow_html=True
+)
+
+content = """
+양측의 의견은 평행선을 달리고 있고,
+협상은 좁혀질 기미가 보이지 않습니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+# ================================================================================
+# =========================서울시와 사측, 그리고 노조는 무엇을 두고 싸우고 있을까요?=================================
+# ============================================================================================
+
+content = """
+#### 서울시와 사측, 그리고 노조는 무엇을 두고 싸우고 있을까요?
+그 중심에는 **통상 임금**이라는 조금은 생소한 단어가 있습니다.
+지금부터 차근차근 짚어보겠습니다
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+content = """
+##### 임금 구성
+임금은 기본급, 상여금, 수당으로 구성됩니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+# 임금 구조 그래프 시작************************************************************************************
+
+import streamlit as st
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import numpy as np
+from matplotlib.colors import LinearSegmentedColormap, to_rgb
+
+# ——— 한글 폰트 설정 ———
+# Windows 경로 예시 (malgun.ttf); macOS는 '/Library/Fonts/AppleGothic.ttf'
+font_path = 'C:/Windows/Fonts/malgun.ttf'
+font_prop = fm.FontProperties(fname=font_path)
+plt.rc('font', family=font_prop.get_name())
+plt.rcParams['axes.unicode_minus'] = False  # 음수 부호 깨짐 방지
+
+st.markdown("###### 임금 구성 요소별 설명")
+# 데이터
+labels = ['기본급', '상여금', '수당']
+values = [220, 110, 110]
+
+# 그라데이션 컬러맵 생성 (#53b332 → 라이트 그린)
+base_rgb = np.array(to_rgb('#53b332'))
+light_rgb = base_rgb + (1 - base_rgb) * 0.5
+cmap = LinearSegmentedColormap.from_list('grad', [base_rgb, light_rgb])
+
+# 각 구성 요소 색상
+colors = [cmap(0.0), cmap(0.5), cmap(1.0)]
+
+# 스택형 막대그래프 그리기
+fig, ax = plt.subplots()
+bottom = 0
+x = 0  # 단일 카테고리이므로 x 좌표를 0으로 고정
+bar_width = 0.6  # 막대 너비 (0~1)
+
+for val, color, label in zip(values, colors, labels):
+    ax.bar(
+        x,
+        val,
+        bottom=bottom,
+        color=color,
+        width=bar_width,  # 너비 조절
+        edgecolor='none'
+    )
+
+    # 막대 중앙에 텍스트 추가
+    ax.text(
+        x,                   # x 위치 (카테고리 위치)
+        bottom + val / 2,    # y 위치 (아래부터 반 높이 지점)
+        f'{label}({val}만 원)',  # 표시할 텍스트
+        ha='center',         # 가로 정렬: 중앙
+        va='center',         # 세로 정렬: 중앙
+        fontproperties=font_prop,
+        fontsize=12,
+        color='black',
+        weight='bold'
+    )
+    bottom += val
+    
+
+# 레이블 및 제목 설정
+ax.set_xticks([x])
+ax.set_xticklabels(['임금 구성'])
+ax.set_ylabel('금액 (만원)')
+
+plt.tight_layout()
+
+
+# — 여기서부터 columns 레이아웃 적용 —
+col1, col2 = st.columns(2)
+
+with col1:
+    # 왼쪽 컬럼에 차트
+    st.pyplot(fig)
+
+with col2:
+    st.markdown("###### 💡위 범례(기본급/상여금/수당)을 클릭하면 해당 항목만 따로 볼 수 있어요!")
+    selected_item = st.radio("구성 요소",
+                            ("기본급", "상여금", "수당"),
+                            label_visibility="collapsed")	
+    if selected_item == "기본급":
+        st.write("👉 **월 정기 지급되는 고정급여입니다.**")
+    elif selected_item == "상여금":
+        st.write("👉 **기본급 외에 추가적으로 지급되는 급여입니다. 근로 계약 혹은 회사 규정에 따라 일정한 시기에 모든 근로자에게 일률적으로 지급됩니다.**")
+    elif selected_item == "수당":
+        st.write("👉 **근무 시간, 특수 상황, 특정 업무에 따라 지급되는 추가 급여입니다. (예: 야근 수당, 휴일 수당 등)**")
+
+# 임금 구조 그래프 끝************************************************************************************
+
+content = """
+##### 통상임금
+통상임금은 **근로자가 근로계약에 따라 정기적이고 일률적으로 지급받는 임금**으로,
+**연장근로 수당, 야간근로 수당, 휴일근로 수당 계산의 기준이 되는 중요한 지표**입니다. 
+기본적으로 통상임금에 할증율을 적용하여 수당을 계산하는데, 예시를 들어보겠습니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+st.image("이미지/day_night.png", use_container_width=True)
+
+st.code("""
+* 오후 10시부터 오전 06시 사이, 야간 근로를 할 시에는
+  ‘통상 임금’의 50%를 가산하여 받게 됩니다.
+
+* 이 말인 즉, 원래 일 통상 임금이 10,000원으로 책정되는 사람이
+  오후 10시부터 오전 1시까지 3시간을 일하게 되면,
+  (3시간 + 3시간*0.5)*10,000 = 총 45,000원을 받게 된다는 뜻입니다.
+""")
+
+content = """
+기존에는 기본급, 상여금, 수당 중 기본급만 통상 임금에 포함되어 있었습니다.
+그런데 2024년 12월 19일, 이 모든 것을 뒤바꾼 사건이 발생합니다.
+
+그것은 바로,
+**통상임금에 ‘상여금’을 포함해야 한다는 대법원 판결**이 나온 것입니다.
+이는 임금 구조에 큰 변화를 불러오게 되죠.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+# 변화 전 vs 변화 후 그래프 라디오 버튼 시작**************************************************
+st.markdown("##### 변화 전후 통상임금 해당 범위")
+
+# 1) 세션 스테이트로 mode 기본값 세팅
+if 'mode' not in st.session_state:
+    st.session_state['mode'] = '변화 전'
+
+mode = st.session_state['mode']  # 이전에 선택된 값(또는 기본값)을 사용
+
+# 하이라이트할 세그먼트 결정
+if mode == "변화 전":
+    highlight = ['기본급']
+else:
+    highlight = ['기본급', '상여금']
+
+
+# 데이터
+labels = ['기본급', '상여금', '수당']
+values = [220, 110, 110]
+
+# 그라데이션 컬러맵 생성 (#53b332 → 라이트 그린)
+base_rgb = np.array(to_rgb('#53b332'))
+light_rgb = base_rgb + (1 - base_rgb) * 0.5
+cmap = LinearSegmentedColormap.from_list('grad', [base_rgb, light_rgb])
+
+# 각 구성 요소 색상
+orig_colors = [cmap(0.0), cmap(0.5), cmap(1.0)]
+highlight_color = '#FC5230'
+
+# 스택형 막대 그리기
+fig, ax = plt.subplots()
+bottom = 0
+x = 0
+bar_width = 0.6
+for val, orig_col, label in zip(values, orig_colors, labels):
+    col = highlight_color if label in highlight else orig_col
+    txt_color = 'white' if label in highlight else 'black'
+    ax.bar(x, val, bottom=bottom, color=col, width=bar_width, edgecolor='none')
+    ax.text(
+        x, bottom + val/2,
+        f'{label}({val}만 원)',
+        ha='center', va='center',
+        fontproperties=font_prop, fontsize=12,
+        color=txt_color, weight='bold'
+    )
+    bottom += val
+    
+
+# 레이블 및 제목 설정
+ax.set_xticks([x])
+ax.set_xticklabels(['임금 구성'])
+ax.set_ylabel('금액 (만원)')
+
+plt.tight_layout()
+
+# — 여기서부터 columns 레이아웃 적용 —
+col1, col2 = st.columns(2)
+
+with col1:
+    # 왼쪽 컬럼에 차트
+    st.pyplot(fig)
+
+with col2:
+    st.markdown("###### 💡변화 전/변화 후를 클릭하여 통상임금 범위를 비교해보세요!")
+
+    # 2) 라디오 버튼을 차트 아래에 렌더링 (key='mode'로 세션 값에 연결)
+    st.radio(
+        "변화 전후 선택",
+        ("변화 전", "변화 후"),
+        key='mode',
+        label_visibility="collapsed"
+    )
+
+# 변화 전 vs 변화 후 그래프 라디오 버튼 끝**************************************************
+
+
+content = """
+통상임금에 따라 수당이 책정되는 만큼,
+연장근로나 야간근로가 많아 수당의 비율이 높은 직무의 경우에는
+상여금이 포함됨에 따라 자연스레 수당이 높게 책정됩니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+# ================================================================================
+# =========================대법원은 왜 통상 임금의 범위를 확대했을까요?=================================
+# ============================================================================================
+
+st.markdown("#### 대법원은 왜 통상 임금의 범위를 확대했을까요?")
+content = """
+결론부터 말하자면, 초과근로수당을 아끼려는 기업의 꼼수를 막기 위해서 입니다.
+이전까지 노동현장에는 임금 항목 대부분에 조건을 붙여 통상 임금을 낮추는 수법이 존재했습니다.
+다시 말해, 통상임금을 기준으로 수당이 정해지니까,
+통상 임금을 낮춤으로써 수당 또한 낮추고자 했던 것이죠.
+이 때문에 월 통상임금이 지나치게 낮은 기형적 임금체계가 존재했습니다.
+
+버스 기사의 임금 구조표를 살펴봅시다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+# st.image("wage.png", use_container_width=True)
+
+content = """
+2024년 버스 기사 4호봉 기준으로 보면,
+기본급은 약 223만 원이지만, 주휴·연장·야간 수당과 상여금 수당 등을 포함한 월 실수령 총액은 약 470만 원입니다.
+연장근로, 야간근로가 많다보니 기본급 기반의 고정임금은 적고, 수당과 상여금에 의존하는 구조이죠.
+상여금을 기본급으로 포함시키면 수당이 높아지니, 받아야 할 돈을 다 상여금으로 빼놓고 수당은 기본급을 기준으로 주고 있었던 것입니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+# st.image("article.png", use_container_width=True)
+
+
+# ================================================================================
+# =========================이제 대법원 판결이 적용되면?=================================
+# ============================================================================================
+
+st.markdown("#### 이제 대법원 판결이 적용되면?")
+
+
+# 변화 전후 그래프 슬라이더 시작************************************************************************************
+
+st.markdown("###### 변화 전후 수당 비교")
+
+# 1) session_state 초기화
+if 'overtime' not in st.session_state:
+    st.session_state.overtime = 0
+
+# 2) 내부 로직에 사용할 값 가져오기
+slider_val = st.session_state.overtime
+
+# 카테고리 & 데이터
+labels      = ['기본급', '상여금', '수당']
+base_pre  = [220, 110, 0]  # 변화 전
+base_post = [220, 110, 0]  # 변화 후
+
+# 변화 전 수당: slider 비율로 0~110
+pre_allowance  = int(slider_val * 110 / 130)
+# 변화 후 수당: slider 비율로 0~200
+post_allowance = int(slider_val * 200 / 130)
+
+# 스택형 값 리스트 완성
+values_pre  = [base_pre[0],  base_pre[1],  pre_allowance]
+values_post = [base_post[0], base_post[1], post_allowance]
+
+# 그라데이션 컬러맵 (#53b332 → 라이트 그린)
+base_rgb  = np.array(to_rgb('#53b332'))
+light_rgb = base_rgb + (1 - base_rgb) * 0.5
+cmap      = LinearSegmentedColormap.from_list('grad', [base_rgb, light_rgb])
+colors    = [cmap(0.0), cmap(0.5), cmap(1.0)]
+
+# 막대 위치 & 너비
+positions = [0, 1]
+bar_width = 0.6
+
+# Figure 생성
+fig, ax = plt.subplots()
+
+# 두 개 스택형 막대 그리기
+for pos, vals in zip(positions, [values_pre, values_post]):
+    bottom = 0
+    for val, color, label in zip(vals, colors, labels):
+        ax.bar(
+            pos,
+            val,
+            bottom=bottom,
+            width=bar_width,
+            color=color,
+            edgecolor='none'
+        )
+        ax.text(
+            pos,
+            bottom + val / 2,
+            f'{label}({val}만 원)',
+            ha='center',
+            va='center',
+            fontproperties=font_prop,
+            fontsize=11,
+            color='black',
+            weight='bold'
+        )
+        bottom += val
+
+# 축 레이블 설정
+ax.set_xticks(positions)
+ax.set_xticklabels(['변화 전', '변화 후'])
+ax.set_ylabel('금액 (만원)')
+
+# y축을 0~600으로 고정하고, 100단위로 눈금 표시
+ax.set_ylim(0, 600)
+ax.set_yticks(range(0, 601, 100))
+
+plt.tight_layout()
+st.pyplot(fig)
+
+# 4) 그 아래에 슬라이더
+st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
+st.slider("추가 근무 시간", 0, 130, key='overtime')
+
+# 변화 전후 그래프 슬라이더 끝************************************************************************************
+
+
+content = """
+상여금이 모두 통상임금에 포함되면서 수당 역시 상여금 포함분을 기준으로 책정됩니다.
+이제 버스 기사들의 수당 증가분이 가파르게 오르게 되겠죠.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+# ================================================================================
+# =========================서울시와 사측은?=================================
+# ============================================================================================
+
+st.markdown("#### 서울시와 사측은?")
+content = """
+판결에 따른 급격한 임금 총액 상승은 감당하기 어렵다는 입장입니다.
+현실적인 재정 여력과 운영 효율성도 감안해야 한다는 것이죠.
+이들은 노조 요구안을 수용하면 다음과 같은 결과가 나올 것이라 보았습니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+# 노조 요구안 수용 시 주요 지표 변화 시작************************************************************************************
+
+import streamlit as st
+
+st.markdown("### 노조 요구안 수용 시 주요 지표 변화")
+
+# 1) 선택박스 항목
+options = [
+    "운수종사자 평균 연봉",
+    "서울시 연간 재정지원금",
+    "운전직 인건비 총액",
+    "서울시민 1인당 세금부담액",
+    "버스요금"
+]
+
+# 2) 각 항목별 변화 매핑
+changes = {
+    "운수종사자 평균 연봉": "6,273만 → 7,872만",
+    "서울시 연간 재정지원금": "5,459억 → 8,259억",
+    "운전직 인건비 총액":   "9,500억 → 1조 6,180억",
+    "서울시민 1인당 세금부담액": "55,000원 → 85,000원",
+    "버스요금":           "1,500원 → 1,800원"
+}
+
+# 3) 선택박스 렌더링
+selection = st.selectbox("▶ 보고 싶은 지표를 선택하세요", options)
+
+# 4) 결과 표시
+st.markdown(f"**{selection}**: {changes[selection]}")
+
+# 노조 요구안 수용 시 주요 지표 변화 끝************************************************************************************
+
+content = """
+특히 서울시는 준공영제 아래 매년 수천억 원의 재정 지원을 하고 있기 때문에 통상임금 확대가 수당을 밀어올리는 구조가 될 경우, 재정 부담이 급격히 늘어난다고 주장합니다.
+이에 따라 “임금 총액을 유지하고 추후 기본급 인상을 논의하자”고 말합니다.
+즉, 상여금이 통상임금에 포함되더라도, 기본급을 줄이거나 수당 구조를 조정해 전체 총액은 동일하게 맞추겠다는 방향입니다.
+
+노조는 이 방식을 ‘사실상 판결 무력화’라고 보고 있습니다.
+상여금을 넣어주면서 기본급이나 근무시간을 줄이는 건,
+결국 받을 돈은 그대로 두고, 구조만 바꿔본 셈이라는 것이죠.
+
+결국, 법의 취지를 따를 것인가,
+재정 현실에 맞게 조율할 것인가
+서울시와 사측, 그리고 노조는 여전히 해결되지 않은 평행선 위에 서 있습니다.
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+st.image("이미지/conflict.png", use_container_width=True)
+
+
+content = """
+우리는 궁금해졌습니다.
+언론은 이 사태를 어떻게 설명하고 있을까요?
+"""
+
+st.markdown(
+    f"""
+<div style="white-space: pre-wrap;line-height: 2.5;">
+{content}
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+
 #####################명원 파트###################
 # 제목
 st.markdown("""
