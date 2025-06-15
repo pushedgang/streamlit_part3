@@ -163,8 +163,9 @@ st.markdown("""
 **그러나 서울시는 이렇게 주장합니다.** """)
 
 
-image = Image.open("/Users/min/Documents/대학교/강의/25-1/데이터 저널리즘/팀플/이미지/서울시임금체계개편안.webp")  # 예: "img/salary_chart.png"
-st.image(image, caption="임금 구조 차트 예시", use_container_width=True)
+image = Image.open("이미지/서울시임금체계개편안.webp")
+st.image(image, caption="서울시 임금체계 개편안", use_container_width=True)
+
 
 st.markdown("""
 
@@ -258,7 +259,7 @@ st.markdown("""
             """)
 
 
-image = Image.open("/Users/min/Documents/대학교/강의/25-1/데이터 저널리즘/팀플/이미지/기본급_시급.png")  # 예: "img/salary_chart.png"
+image = Image.open("이미지/기본급_시급.png")  # 예: "img/salary_chart.png"
 st.image(image, caption="4시간 근로 시 기본급 총액이 인상되면, 하나의 덩어리인 시급도 함께 오릅니다", use_container_width=True)
 
 st.markdown("""
@@ -270,7 +271,7 @@ st.markdown("""
 
 
 
-image = Image.open("/Users/min/Documents/대학교/강의/25-1/데이터 저널리즘/팀플/이미지/수당_근로시간.png")  # 예: "img/salary_chart.png"
+image = Image.open("이미지/수당_근로시간.png")  # 예: "img/salary_chart.png"
 st.image(image, caption="수당의 변화분이 없게 된다면, 이는 곧 인정되는 시간을 줄이겠다는 뜻입니다", use_container_width=True)
 
 st.markdown("""
