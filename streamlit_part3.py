@@ -222,7 +222,7 @@ from matplotlib.colors import LinearSegmentedColormap, to_rgb
 
 # ——— 한글 폰트 설정 ———
 # Windows 경로 예시 (malgun.ttf); macOS는 '/Library/Fonts/AppleGothic.ttf'
-font_path = 'C:/Windows/Fonts/malgun.ttf'
+font_path = 'fonts/malgun.ttf'
 font_prop = fm.FontProperties(fname=font_path)
 plt.rc('font', family=font_prop.get_name())
 plt.rcParams['axes.unicode_minus'] = False  # 음수 부호 깨짐 방지
