@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sb
 from bokeh.plotting import figure
-from streamlit_bokeh import streamlit_bokeh
+
 
 # Webpage Title
 st.title("2025년 서울 시내버스 파업")
