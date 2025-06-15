@@ -3,6 +3,128 @@ import streamlit as st
 import plotly.graph_objects as go
 from PIL import Image
 
+#####################명원 파트###################
+# 제목
+st.markdown("""
+    <h2 style='margin-bottom: 0px;'>언론은 버스 파업 사태를 어떻게 조명했나?</h2>
+    <hr style='margin-top: 0px;;'>
+""", unsafe_allow_html=True)
+
+
+
+st.markdown("""
+서울 시내버스 노조와 지자체 간에 통상 임금을 둘러싼 의견 차이가 결국 파업이라는 극단적 상황으로 치달았다. 그렇다면 이 같은 상황을 기성 언론사들은 어떤 시선으로 보도했을까. 본지는 **2024년 12월 4일부터 2025년 6월 3일까지 총 6개월간** 일간지 및 주요 경제지 **29곳의 기사 525건**을 수집해 데이터 분석을 진행해 그 차이를 조명해보기로 했다.
+""")
+
+st.markdown("""<br>""", unsafe_allow_html=True)
+
+
+# 1. 헤드라인 워드클라우드
+st.markdown("### 1. 헤드라인 워드클라우드: 진보는 구조, 보수는 피해에 초점")
+st.image("이미지/wordcloud.png", caption="5대 언론사 헤드라인(기사 제목) 기준 워드클라우드")
+
+st.markdown("""
+우선 각 언론사가 '버스 파업'을 주제로 발행한 기사들의 제목을 형태소 단위로 빈번하게 등장한 키워드를 확인했다.  
+""")
+
+col1, col2 = st.columns([1.3, 1])  # 왼쪽: 인용문, 오른쪽: 설명
+
+with col1:
+    st.markdown("""
+    <blockquote style='padding: 15px 20px; background-color: #f9f9f9; border-left: 5px solid #999; margin: 0;'>
+        <p style='margin-bottom: 10px;'>
+            <span style='font-weight: bold;'>‘통상임금’ 접점 못 찾는 서울버스 전면파업 가능성</span><br>
+            <span style='font-size: 0.9em; color: #666;'>(경향신문, 2025.05.07)</span>
+        </p>
+        <p style='margin-bottom: 0px;'>
+            <span style='font-weight: bold;'>버스파업 통상임금 줄다리기 노조 “지자체가 해결해야”</span><br>
+            <span style='font-size: 0.9em; color: #666;'>(한겨레, 2025.05.20)</span>
+        </p>
+    </blockquote>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    진보 성향 언론으로 알려진 **경향신문**과 **한겨레**는 헤드라인에서 ‘통상임금’, ‘교섭’, ‘준법투쟁’ 등 파업의 쟁점과 구조적 배경에 주목했다. 노조와 지자체 간 협상이 통상임금 문제에서 접점을 찾지 못한 채 파업으로 이어졌다는 접근이다. 
+    """)
+
+st.markdown("<br>", unsafe_allow_html=True)  # 1줄 공백
+
+col3, col4 = st.columns([1.3, 1])  # 왼쪽: 인용문, 오른쪽: 설명
+
+with col3:
+    st.markdown("""
+    <blockquote style='padding: 15px 20px; background-color: #f9f9f9; border-left: 5px solid #999; margin: 0;'>
+        <p style='margin-bottom: 10px;'>
+            <span style='font-weight: bold;'>‘서울 버스 임단협 막판까지 진통 출근길 대란 우려</span><br>
+            <span style='font-size: 0.9em; color: #666;'>(동아일보, 2025.05.28)</span>
+        </p>
+        <p style='margin-bottom: 10px;'>
+            <span style='font-weight: bold;'>“버스 준법투쟁? <br>몰랐어요 큰일이네” 서울 출근길 시민들 당황업”</span><br>
+            <span style='font-size: 0.9em; color: #666;'>(중앙일보, 2025.04.30)</span>
+        </p>
+        <p style='margin-bottom: 0px;'>
+            <span style='font-weight: bold;'>초봉 5400만원 버스기사들의 파업”</span><br>
+            <span style='font-size: 0.9em; color: #666;'>(조선일보, 2025.05.13)</span>
+        </p>
+    </blockquote>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown("""
+    반면 보수 성향 언론인 **조선일보, 동아일보, 중앙일보**는 ‘출근길’, ‘시민 불편’, ‘대란’과 같은 키워드를 중심으로 파업이 초해할 피해를 강조했다. 특히 조선일보는 버스 기사 연봉 수준을 부각하며 이번 파업이 노조 측의 과도한 임금 인상 요구에서 기인했다는 인상을 심어주는 등, 노조의 정당성보다는 파업의 파급력과 부담에 초점을 맞추는 경향을 보였다.
+    """)
+
+st.markdown("""<br>이처럼 워드클라우드 분석 결과는 정치적 성향에 따라 언론이 어떤 문제를 ‘첫 문장’에서 가장 먼저 보여주는지를 명확히 드러낸다. 진보는 원인과 구조, 보수는 결과와 혼란을 이야기했다.""", unsafe_allow_html=True)
+
+st.markdown("""<br>""", unsafe_allow_html=True)
+
+# 2. 본문 첫 문단 TF-IDF
+st.markdown("### 2. 본문 첫 문단 TF-IDF: 정치 성향에 따른 입장 차이는 여전")
+st.image("이미지/tf_idf.png", caption="TF-IDF 비교")
+
+st.markdown("""
+본문 첫 5문장에 대한 TF-IDF 분석 결과, 진보와 보수 언론의 입장은 더욱 뚜렷하게 갈렸다.
+
+- 진보 (**경향신문, 한겨레**): "준법투쟁", "노사" 등 구조적 문제를 집중적으로 다뤘다.
+- 보수 (**조선일보**): 통상임금 언급을 거의 피하며, "인상", "지연", "출근길" 등 시민 피해 중심의 논조를 채택했다.
+""")
+
+# 3. 본문 전체 토픽 모델링
+st.markdown("### 3. 본문 전체 토픽 모델링: 그러나 기사의 주제는 대동소이하다")
+st.image("이미지/topic_num.png", caption="적정 토픽 개수")
+st.image("이미지/topic_result.png", caption="토픽 모델링 결과")
+
+
+st.markdown("""
+Komoran 형태소 분석기를 활용해 기사 본문을 분석했다. 전체 기사는 다음 4가지 주제로 나뉘었고, 대부분의 언론사가 이 주제들을 비슷한 비율로 다뤘다.
+""")
+
+st.image("이미지/topic_text.png", caption="토픽 설명")
+
+st.markdown("""
+- **Topic 0**: 전국 동시 파업 및 조직적 연대 움직임
+- **Topic 1**: 통상임금 및 임금 체계 개선 논의
+- **Topic 2**: 시민 불편 및 수송 대책 보도
+- **Topic 3**: 협상 진행 및 파업 일정 중심 설명
+""")
+
+st.image("이미지/topic_rate.png", caption="토픽 분포")
+
+st.markdown("""
+경향신문과 동아일보는 협상 과정을, 중앙일보와 한겨레는 통상임금 쟁점을 가장 많이 다뤘다. 그러나 중앙일보는 서울시 재정 부담 증가를, 한겨레는 대법원 판례와 제도적 필요성을 강조했다.
+""")
+
+# 나가며
+st.markdown("### 나가며: 표면적인 보도에 가려진 본질적인 질문들")
+
+st.markdown("""
+분석 결과가 드러내는 진짜 문제는 이들 모든 언론이 표면적 갈등과 사건 전개에만 초점을 맞췄다는 점이다. 왜 통상임금이 노사 협상의 핵심 쟁점이 되었는지, 버스 기사들이 무리한 임금 인상을 요구하고 있는 것인지에 대한 심층적 보도는 부족했다.
+
+파업이라는 결과만 보도할 것이 아니라, 이 같은 갈등이 반복되는 구조적 원인과 제도의 맹점을 짚는 책임 있는 언론 보도가 필요하다. 본지는 앞으로 노조의 성명문과 서울시 보도 자료를 비교 분석하고, 전문가 인터뷰를 통해 파업 사태를 더욱 깊이 있게 다뤄볼 예정이다.
+""")
+
+
 #############################기본급 + 수당 변화 그래프 (노조)###################################
 
 
