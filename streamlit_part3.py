@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+from PIL import Image
 
 # Webpage Title
 st.title("서울시 버스파업, 그 이면에 대하여")
