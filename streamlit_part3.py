@@ -7,6 +7,8 @@ from PIL import Image
 
 # Webpage Title
 st.title("서울시 버스파업, 그 이면에 대하여")
+st.markdown("<h5>25-1 데이터저널리즘 3조 : 김경민, 김명원, 이유림</h5>", unsafe_allow_html=True)  # subheader보다 작음
+
 
 # ================================================================================
 # ==========================이런 문자, 본 적 있나요?=================================
@@ -610,14 +612,17 @@ plt.tight_layout()
 st.pyplot(fig)
 
 # 4) 그 아래에 슬라이더
-st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
 st.slider(
     "추가 근무 시간",
-    min_value=75,    # 최소값을 75로
-    max_value=130,   # 최대값 그대로
-    value=75,        # 기본값도 75로 설정
+    min_value=75,
+    max_value=130,
+    value=75,
     key='overtime'
 )
+
+slider_val = st.session_state["overtime"]
+st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
+
 
 # 변화 전후 그래프 슬라이더 끝************************************************************************************
 
