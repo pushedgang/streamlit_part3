@@ -245,7 +245,7 @@ proj_dir = os.path.dirname(__file__)
 if sys.platform.startswith("win"):
     font_path = os.path.join(proj_dir, "KoPub Batang Medium.ttf")
 else:
-    font_path = "Fonts/KoPub Batang Medium.ttf"
+    font_path = "fonts/KoPub Batang Medium.ttf"
 
 fm.fontManager.addfont(font_path)
 font_prop = fm.FontProperties(fname=font_path)
