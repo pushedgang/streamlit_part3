@@ -38,7 +38,7 @@ if "page" not in st.session_state:
 def render_card(page):
     if page == 1:
         st.markdown(f"""
-        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; text-align:center;">
+        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; border: 2px solid #ccc; text-align:center;">
             <h5>이런 문자, 본 적 있나요?</h5>
             <img src="data:image/png;base64,{b64_msg}" style="width:100%; margin:10px 0;" />
             <p>2025년 5월 27일 밤 9시 경,<br/>서울 시민들에게 재난 문자가 도착했습니다.</p>
@@ -47,7 +47,7 @@ def render_card(page):
 
     elif page == 2:
         st.markdown(f"""
-        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; text-align:center;">
+        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; border: 2px solid #ccc; text-align:center;">
             <img src="data:image/png;base64,{b64_many}" style="width:100%; margin:10px 0;" />
             <p>서울을 오가는 시내버스들이 파업에 돌입한 상황.<br/>
             다음 날 아침 수백만 명의 출근길과 등굣길이 마비될 뻔했습니다.</p>
@@ -56,8 +56,8 @@ def render_card(page):
 
     elif page == 3:
         st.markdown(f"""
-        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; text-align:center;">
-            <img src="data:image/png;base64,{b64_think}" style=width:90%; margin:10px 0;" />
+        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; border: 2px solid #ccc; text-align:center;">
+            <img src="data:image/png;base64,{b64_think}" style="width:90%; margin:10px 0;" />
             <p>하지만 여러분은 별다른 혼란을 겪지 않았을 거예요.<br/>
             왜냐하면 불과 4시간 만에, 파업은 유보되었기 때문입니다.</p>
         </div>
@@ -65,7 +65,7 @@ def render_card(page):
 
     elif page == 4:
         st.markdown(f"""
-        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; text-align:center;">
+        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; border: 2px solid #ccc; text-align:center;">
             <p>그런데, 정말 이게 끝일까요?<br/>
             사실 이 파업은 단순한 해프닝이 아닙니다.</p>
             <p>그 배경에는 수개월에서 수년 간 쌓인 갈등이 있었습니다.</p>
@@ -74,7 +74,7 @@ def render_card(page):
 
     elif page == 5:
         st.markdown(f"""
-        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; text-align:center;">
+        <div style="background-color:#edf2fb; padding:20px; border-radius:10px; border: 2px solid #ccc; text-align:center;">
             <p><strong>2023년 3월 첫 파업부터 시작해,<br/>
             9차례 교섭, 반복된 조정 회의, 준법 투쟁,<br/>
             그리고 또 다른 파업 예고와 유보까지.</strong></p>
