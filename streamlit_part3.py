@@ -1153,13 +1153,6 @@ st.markdown("""
 import streamlit as st
 import plotly.graph_objects as go
 
-# 🎨 수당 색상 함수
-def get_allow_color(val):
-    norm_val = (val - 110) / 55
-    norm_val = max(0, min(norm_val, 1))
-    rg_value = int(190 - 130 * norm_val)
-    return f'rgb({rg_value}, {rg_value}, 255)'
-
 # 🎁 전체 레이아웃 (여백 포함)
 left_space, main, right_space = st.columns([0.2, 5, 0.2])
 
@@ -1169,8 +1162,10 @@ with main:
 
     # 💰 계산
     allowance = base_salary * 0.5
-    base_color = 'rgb(100, 180, 255)'
-    allow_color = get_allow_color(allowance)
+
+    # 🎨 고정된 파란 계열 색상
+    base_color = "#7DAEDC"   # 기본급 (연한 블루)
+    allow_color = "#4F8FBF"  # 수당 (조금 진한 블루)
 
     # 📊 그래프 생성
     fig = go.Figure()
@@ -1182,6 +1177,7 @@ with main:
         orientation="h",
         marker=dict(color=base_color, line=dict(color='black', width=2)),
         text=[f"{int(base_salary)}만원"],
+        textfont=dict(family="NanumGothic", color="white"),
         textposition='inside',
         hovertemplate='기본급<extra></extra>'
     ))
@@ -1193,6 +1189,7 @@ with main:
         orientation="h",
         marker=dict(color=allow_color, line=dict(color='black', width=2)),
         text=[f"{int(allowance)}만원"],
+        textfont=dict(family="NanumGothic", color="white"),
         textposition='inside',
         hovertemplate='수당<extra></extra>'
     ))
@@ -1207,6 +1204,11 @@ with main:
         plot_bgcolor='#fafafa',     # 그래프 내부 배경
         paper_bgcolor='#fafafa',    # 전체 배경
         margin=dict(l=20, r=20, t=50, b=20),
+        font=dict(  # ✅ 나눔고딕 적용
+            family="NanumGothic",
+            size=14,
+            color="#FFFFFF"
+        ),
         shapes=[
             dict(
                 type='rect',
@@ -1225,16 +1227,15 @@ with main:
         ]
     )
 
+
     # 📈 출력
     st.plotly_chart(fig, use_container_width=True)
 
-
-
-
+# 설명 마크다운
 st.markdown("""
- 위 그래프의 <strong>'기본급'</strong>을 조정하면, 이에 따른 <strong>'수당'</strong>의 증가분을 볼 수 있습니다. 기본적으로 수당은 기본급과 정비례하니, 기본급이 늘면 수당도 늘어야한다고 노조 측은 주장합니다.""",unsafe_allow_html=True)
-st.write("")
-st.write("")
+위 그래프의 <strong>'기본급'</strong>을 조정하면, 이에 따른 <strong>'수당'</strong>의 증가분을 볼 수 있습니다.  
+기본적으로 수당은 기본급과 정비례하니, 기본급이 늘면 수당도 늘어야 한다고 노조 측은 주장합니다.
+""", unsafe_allow_html=True)
 
 
 
@@ -1269,21 +1270,15 @@ total_salary = 440
 left, main, right = st.columns([0.2, 5, 0.2])
 
 with main:
-    # 기본급 슬라이더: 200 ~ 300
+    # 기본급 슬라이더: 220 ~ 330
     base_salary = st.slider("기본급 (만원)", 220, 330, 220, step=10)
 
     # 수당 자동 계산
     allowance = total_salary - base_salary
 
-    # 색상 함수 (수당만 색상 변화)
-    def get_allow_color(val):
-        norm_val = val / 200  # 수당 최대 200 기준 정규화
-        norm_val = max(0, min(norm_val, 1))
-        rg_value = int(190 - 130 * norm_val)
-        return f'rgb({rg_value}, {rg_value}, 255)'
-
-    base_color = 'rgb(180, 180, 255)'
-    allow_color = get_allow_color(allowance)
+    # 고정 색상: 파란 계열 통일
+    base_color = "#7DAEDC"   # 기본급 (연한 블루)
+    allow_color = "#4F8FBF"  # 수당 (조금 진한 블루)
 
     # 시각화 시작
     fig = go.Figure()
@@ -1299,6 +1294,7 @@ with main:
             line=dict(color='black', width=2)
         ),
         text=[f"{int(base_salary)}만원"],
+        textfont=dict(family="NanumGothic", color="white"),
         textposition='inside',
         hovertemplate='기본급<extra></extra>'
     ))
@@ -1314,21 +1310,27 @@ with main:
             line=dict(color='black', width=2)
         ),
         text=[f"{int(allowance)}만원"],
+        textfont=dict(family="NanumGothic", color="white"),
         textposition='inside',
         hovertemplate='수당<extra></extra>'
     ))
 
-    # 레이아웃 (배경색 + 박스 테두리 추가)
+        # 레이아웃 (배경색 + 박스 테두리 추가)
     fig.update_layout(
         barmode='stack',
-        title=f"임금 총액: {total_salary}만원 (기본급 {int(base_salary)} / 수당 {int(allowance)})",
-        xaxis=dict(title="총 금액 (만원)", range=[0, 600]),
-        yaxis=dict(title=""),
-        height=300,
+        title=f"임금 총액: {int(base_salary + allowance)}만원",
+        xaxis=dict(title='총 금액 (만원)', range=[0, 600]),
+        yaxis=dict(title=''),
         transition_duration=500,
-        plot_bgcolor='#fafafa',     # 내부 배경
-        paper_bgcolor='#fafafa',    # 전체 배경
+        height=300,
+        plot_bgcolor='#fafafa',
+        paper_bgcolor='#fafafa',
         margin=dict(l=20, r=20, t=50, b=20),
+        font=dict(  # ✅ 여기 추가
+            family="NanumGothic",
+            size=14,
+            color="#FFFFFF"
+        ),
         shapes=[
             dict(
                 type='rect',
@@ -1344,26 +1346,26 @@ with main:
         ]
     )
 
+
     # 출력
     st.plotly_chart(fig, use_container_width=True)
 
+    # 설명 문구
+    st.markdown("""
+    위 그래프의 슬라이더를 움직이면, 기본급을 올리면서 임금 동결을 한다는 것이 무슨 뜻인지 이해할 수 있습니다.  
+    한 마디로 정리하자면, 상여금이 기본급화 된다고 하더라도, 이에 따른 **수당의 변화분은 생기지 않는다**는 것입니다.
+    """)
+
+st.markdown("#### 기본급 증가와 임금 동결이 어떻게 동시에 가능한가?")
 
 st.markdown("""
-            위 그래프의 슬라이더를 움직이면, 기본급을 올리면서 임금 동결을 한다는 것이 무슨 뜻인지 이해할 수 있습니다. 한 마디로 정리하자면, 상여금이 기본급화 된다고 하더라도, 이에 따른 **수당의 변화분은 생기지 않는다**는 것입니다.
-            
-            """)
-st.markdown("""
-            #### 기본급 증가와 임금 동결이 어떻게 동시에 가능한가?
-            """)
-st.markdown("""
-            생각을 한번 해봅시다. 기본급이 올랐으면, 근로시간이 같은 이상 시급은 자연스럽게 오르게 되어 있습니다.
-            """)
+    생각을 한번 해봅시다. 기본급이 올랐으면, 근로시간이 같은 이상 시급은 자연스럽게 오르게 되어 있습니다.
+    """)
 
-import streamlit as st
-
-# 기준 근로시간
+# 기준 근로시간 변수 선언 (추후 사용될 수 있음)
 std_hours_1 = 209
 std_hours_2 = 176
+
 
 ############################# 텍스트 설명 (전체 폭) #############################
 
@@ -1611,30 +1613,41 @@ st.markdown("""
             """)
 st.markdown("""
 <div style='
+    padding: 12px 15px;
     background-color: #f9f9f9;
-    padding: 30px;
-    margin: 20px 0;
-    font-style: normal;
-    color: #333;
-    line-height: 1.6;
-    font-size : 0.9rem;
+    border-left: 5px solid #999;
+    margin: 10px 0;
 '>
-국내 봉급자들이 대부분 그렇듯, **버스기사들의 봉급도 기본급, 상여금, 수당으로 구성**됩니다.  
-서울시 버스정책과에 따르면, 기본급과 상여금이 전체 임금의 60%, 수당이 40%를 차지합니다.  
 
-이 중 **2개월마다 동일 금액으로 지급되는 상여금**은,  
-수당 중심 임금 체계에 대한 노동자의 반발을 무디게 하기 위한 장치입니다.  
-즉, 기본급을 낮게 묶고, 그를 바탕으로 산정되는 **수당 인상 폭을 제한**하려는 전략이죠.  
+  <div style='margin-bottom: 10px;'>
+    <p style='margin: 0;'><strong>“버스운전사 연봉 6200만원, 그 안에 숨은 진실”</strong></p>
+    <small style='color: #666;'>(<a href="https://n.news.naver.com/article/079/0004026584?sid=102" target="_blank">오마이뉴스</a>, 2025.05.21)</small><br>
+    <span style='font-size: 0.85em; color: #666;'>
+    국내 봉급자들이 대부분 그렇듯, 버스기사들의 봉급도 기본급, 상여금, 수당으로 구성됩니다.  
+    서울시 버스정책과에 따르면, 기본급과 상여금이 전체 임금의 60%, 수당이 40%를 차지합니다.
+    </span>
+  </div>
 
-이에 따라 **서울의 버스기사들을 대표한 동아운수 노조는**  
-2015년 상여금을 통상임금에 산입해달라는 소송을 제기했습니다.  
-해당 소송은 1심에서 패소했으며, 현재 2심에 계류 중입니다.
+  <div style='margin-bottom: 10px;'>
+    <span style='font-size: 0.85em; color: #666;'>
+    이 중 2개월마다 동일 금액으로 지급되는 상여금은,  
+    수당 중심 임금 체계에 대한 노동자의 반발을 무디게 하기 위한 장치입니다.  
+    즉, 기본급을 낮게 묶고, 그를 바탕으로 산정되는 수당 인상 폭을 제한하려는 전략이죠.
+    </span>
+  </div>
 
-<div style='text-align: right; font-size: 0.85em; margin-top: 8px; color: #666;'>
-— 오마이뉴스 기사 인용  
-<a href="https://n.news.naver.com/article/079/0004026584?sid=102" target="_blank">[원문 보기]</a>
+  <div>
+    <span style='font-size: 0.85em; color: #666;'>
+    이에 따라 서울의 버스기사들을 대표한 동아운수 노조는  
+    2015년 상여금을 통상임금에 산입해달라는 소송을 제기했습니다.  
+    해당 소송은 1심에서 패소했으며, 현재 2심에 계류 중입니다.
+    </span>
+  </div>
+
 </div>
 """, unsafe_allow_html=True)
+
+
 
 
 
@@ -1668,12 +1681,13 @@ descriptions = {
     "무사고": "무사고 근무에 대한 인센티브"
 }
 colors = [
-    "#F2C94C",  # 부드러운 골드 (기본급)
-    "#F2998D",  # 연코랄 (상여금)
-    "#6BB5D9",  # 맑은 하늘블루 (수당)
-    "#4F8FBF",  # 차분한 블루 (추가근무)
-    "#3D5A80"   # 딥블루 (무사고)
+    "#A7C7E7",  # 연하늘색 (기본급)  
+    "#7DAEDC",  # 부드러운 블루 (상여금)
+    "#4F8FBF",  # 차분한 블루 (수당)
+    "#3D6FA8",  # 중간톤 블루 (추가근무)
+    "#2C4875"   # 딥네이비 (무사고)
 ]
+
 
 
 # 📊 그래프
@@ -1794,11 +1808,31 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+st.write("")
+
+st.markdown("""
+
+이렇듯 2025년 서울시 버스파업은 언론에서 조명된 사실들 이상으로 훨씬 복잡한 뒷 이야기가 존재하며, 진보 및 보수 언론이 각각 집중하는 영역만으로는 해당 내용을 모두 이해하기는 어려운 지점이 존재합니다. 
+""")
+
 
 ###################################결론#################################
 st.markdown("""
 <br><br>
 <div style='background-color: #f5f5f5; padding: 5px 20px; border-radius: 8px; border: 1px solid #cccccc;'>
     <h2 style='margin: 0; color: #444444;'>Section 4 : 결론</h2>
+</div>
+""", unsafe_allow_html=True)
+
+st.write("")
+
+st.markdown(
+    """
+서울시 시내버스 파업은 단순한 임금 인상 갈등이 아닙니다. 그것은 상여금을 통상임금으로 포함하라는 대법원 판결과, 이를 회피하려는 임금 구조 개편 시도 사이에서 벌어진 법과 현실의 충돌이며, 나아가 수년 간 고착된 기형적 임금 체계가 만든 구조적 모순의 복합적인 결과입니다.
+<br><br>안타깝게도 언론 보도는 문제의 본질을 짚지 못합니다. 진보 성향 언론은 파업의 원인을, 보수 성향 언론은 파업의 결과를 강조하며 각자의 시선으로 사안을 구성하는 듯 보입니다. 그러나 토픽 모델링을 통해 기사 전체를 들여다보면 막상 이들이 다루는 본질은 놀랍도록 유사합니다. 
+<br><br>진보든 보수든 언론들은 결국 같은 질문을 반복하고 있습니다. 통상임금 논란의 맥락, 노사 간의 줄다리기, 시민 혼란, 그리고 행정의 대응. 다만 ‘어디서부터 조명했는가’, 그 프레임의 차이만 존재할 뿐이죠. 중요한 것은, 여전히 언론이  닿지 못한 이야기들이 남아 있다는 사실입니다. 복잡한 임금 산정 체계, 간주근로시간제라는 제도적 장치, 통상임금을 둘러싼 법·행정적 전략. 이 모든 것들은 언론의 문법으로는 포착되지 않는 층위입니다.
+<br><br>그렇기에 우리는 묻습니다.
+<br><br><strong>과연 누구의 시선이 빠져 있었는가? 그리고 무엇이 말해지지 않았는가?</strong>
+<br><br>서울시 버스 파업은 하나의 사건을 둘러싸고 수많은 언어가 교차하는 지점입니다. 그리고 그 언어들이 말하지 않은 이야기야말로, 지금 우리가 가장 먼저 들여다봐야 할 ‘진짜 뉴스’일지도 모릅니다.
 </div>
 """, unsafe_allow_html=True)
