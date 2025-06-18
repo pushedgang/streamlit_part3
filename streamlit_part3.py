@@ -645,14 +645,15 @@ plt.tight_layout()
 st.pyplot(fig)
 
 # 4) 그 아래에 슬라이더
-st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
-st.slider(
+slider_val = st.slider(
     "추가 근무 시간",
     min_value=75,    # 최소값을 75로
     max_value=130,   # 최대값 그대로
     value=75,        # 기본값도 75로 설정
     key='overtime'
 )
+
+st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
 
 # 변화 전후 그래프 슬라이더 끝************************************************************************************
 
