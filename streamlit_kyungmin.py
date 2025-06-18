@@ -1,24 +1,30 @@
+#############################경민###########################################
 
-import streamlit as st
-import plotly.graph_objects as go
-from PIL import Image
+
+
+
 
 #############################기본급 + 수당 변화 그래프 (노조)###################################
 
-
+from PIL import Image
 import streamlit as st
 import plotly.graph_objects as go
 
+# 제목
 st.markdown("""
-## 3️⃣ 서울시의 주장, 무엇이 문제일까?
+    <h2 style='margin-bottom: 0px;'>Section 3 : 서울시 버스파업, 자세히 들여다보기 </h2>
+    <hr style='margin-top: 0px;'>
+""", unsafe_allow_html=True)
 
+st.markdown("""
 그렇다면 서울시가 주장하는 통상임금 개편안은 어떠한 문제가 있는 것일까요?
 
 서울시는 상여금을 기본급에 포함하되, 총 임금을 ‘동결’할 것을 주장하였습니다. 반대로 버스 노조 측은 상여금이 기본급에 포함되는데 임금이 동결되는 것은 곧 인정근로시간을 줄이는 것과 마찬가지라고, 기본급이 늘어났는데 총 임금이 같은 건 말이 안 된다고 하고 있죠. 
 
-이를 이해하기 위해선 우선 ‘간주근로시간제’가 무엇인지 이해해야 합니다
+이를 이해하기 위해선 우선 <strong>‘간주근로시간제’</strong>가 무엇인지 이해해야 합니다
 
-""")
+""", unsafe_allow_html=True
+)
 ###############################################################
 st.markdown("""
 ### 간주근로시간제란?
@@ -29,9 +35,7 @@ st.markdown("""
 얼마나 일했는지가 때에 따라 다르고, 기준도 애매하니 ‘**이만큼을 일했다**’라고 회사랑 합의하고 일한 시간과 무관하게 합의한 시간에 맞는 급여를 받는 방식이죠.  
 
 
-버스기사님들은 기사님별로 일하는 날짜 (주간, 주말)도 다르고, 어떤 날은 밤에, 어떤날은 낮에 일하곤 합니다. 고정된 근무 시간을 측정하기 어려운 직업이죠.
-
-따라서 버스기사의 경우에는 주휴수당 제외 176시간, 주휴수당 포함 시 209시간을 일하는 것으로 정해져 있습니다. 월 22일 기준, 하루 9시간 (8시간 + 1시간 연장)을 모두 일해야 ‘만근’으로 인정됩니다. 
+버스기사님들은 기사님별로 일하는 날짜 (주간, 주말)도 다르고, 어떤 날은 밤에, 어떤날은 낮에 일하곤 합니다. 고정된 근무 시간을 측정하기 어려운 직업이죠. 따라서 버스기사의 경우에는 **주휴수당 제외 176시간, 주휴수당 포함 시 209시간**을 일하는 것으로 정해져 있습니다. 월 22일 기준, 하루 9시간 (8시간 + 1시간 연장)을 모두 일해야 ‘만근’으로 인정됩니다. 
 
 
 그러면 간주근로시간제에 따라 일한다는 것을 이해했으니, 다시 서울시와 노조의 입장 차이를 봐볼까요?
@@ -43,65 +47,79 @@ st.markdown("""
 ############################수당 산정 식 ##################################
 
 st.markdown("""
-### 서울시는 무엇을 주장하나?
+### 기본급과 수당, 서울시와 노조의 입장 차이
 우선 간단한 시급과 수당 간의 관계를 살펴봅시다.
 """)
 
 
+# import streamlit as st
+
+# st.latex(r'''
+# \frac{\text{기본급}}{\text{소정근로시간}} = \text{시급}
+# ''')
+
+# st.latex(r'''
+# \text{시급} \times \text{연장근로시간} = \text{수당}
+# ''')
+
 import streamlit as st
 
-st.latex(r'''
-\frac{\text{기본급}}{\text{소정근로시간}} = \text{시급}
-''')
+import streamlit.components.v1 as components
 
-st.latex(r'''
-\text{시급} \times \text{연장근로시간} = \text{수당}
-''')
+# 📐 여백 포함한 layout
+left_space, main, right_space = st.columns([0.2, 5, 0.2])
+
+with main:
+    components.html("""
+    <div style="background-color: #fafafa; padding: 16px; border-radius: 8px; text-align: center;">
+      <script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+      </script>
+      <p style="font-size: 20px;">\\( \\frac{\\text{기본급}}{\\text{소정근로시간}} = \\text{시급} \\)</p>
+      <p style="font-size: 20px;">\\( \\text{시급} \\times \\text{연장근로시간} = \\text{수당} \\)</p>
+    </div>
+    """, height=200)
+
 ###########################끝 수당 산정 식#################################
-st.write("")
 
 st.markdown("""
-            
+‘시급’은 기본급과 근로시간을 기준으로 산정됩니다. 즉 **시급 = 기본급/근로시간** 인 것이죠. 
 
-* ‘시급’은 기본급과 근로시간을 기준으로 산정됩니다. 즉 **시급 = 기본급/근로시간** 인 것이죠. 
-
-* ‘수당’은 이렇게 산정된 시급과 추가근로시간의 곱으로 정해집니다. 즉 **수당 = 시급 * 추가근로시간** 입니다,
-
+‘수당’은 이렇게 산정된 시급과 추가근로시간의 곱으로 정해집니다. 즉 **수당 = 시급 * 추가근로시간** 입니다,
 
 이제 시급과 수당이 무엇인지 이해한 채로, 서울시와 노조 각각의 주장을 살펴봅시다.
 
-""")
+""",unsafe_allow_html=True)
 
-st.write("")
-st.write("")
 
 st.markdown("""
             #### 노조의 주장
             """)
 
 st.markdown("""
-            
             노조가 주장하는 것은 다음과 같습니다.""")
 
 import streamlit as st
 import plotly.graph_objects as go
 
-# 🎨 색상 함수
+# 🎨 수당 색상 함수
 def get_allow_color(val):
     norm_val = (val - 110) / 55
     norm_val = max(0, min(norm_val, 1))
     rg_value = int(190 - 130 * norm_val)
     return f'rgb({rg_value}, {rg_value}, 255)'
 
-# 🎁 왼쪽 여백을 위한 columns 활용
-left_space, main, right_space = st.columns([0.2, 5,0.2])  # 왼쪽에 1 비율의 여백, 본문은 5
+# 🎁 전체 레이아웃 (여백 포함)
+left_space, main, right_space = st.columns([0.2, 5, 0.2])
 
 with main:
-    # 🎚️ 슬라이더 입력
-    base_salary = st.slider("기본급 입력 (만원)", 220, 330, 220, step=10)
-    allowance = base_salary * 0.5
+    # 🎚️ 슬라이더 먼저: 기본급 설정
+    base_salary = st.slider("기본급 입력 (만원)", 220, 330, step=10)
 
-    # 색상 설정
+    # 💰 계산
+    allowance = base_salary * 0.5
     base_color = 'rgb(100, 180, 255)'
     allow_color = get_allow_color(allowance)
 
@@ -136,7 +154,26 @@ with main:
         xaxis=dict(title='총 금액 (만원)', range=[0, 600]),
         yaxis=dict(title=''),
         transition_duration=500,
-        height=300
+        height=300,
+        plot_bgcolor='#fafafa',     # 그래프 내부 배경
+        paper_bgcolor='#fafafa',    # 전체 배경
+        margin=dict(l=20, r=20, t=50, b=20),
+        shapes=[
+            dict(
+                type='rect',
+                xref='paper',
+                yref='paper',
+                x0=0,
+                y0=0,
+                x1=1,
+                y1=1,
+                line=dict(
+                    color='gray',
+                    width=2
+                ),
+                layer='below'
+            )
+        ]
     )
 
     # 📈 출력
@@ -146,8 +183,7 @@ with main:
 
 
 st.markdown("""
- 수당은 기본급과 비례하니, 기본급이 늘면 수당도 늘어야한다라는 것이죠. 사실상 맞는 말이고요.
-""")
+ 위 그래프의 <strong>'기본급'</strong>을 조정하면, 이에 따른 <strong>'수당'</strong>의 증가분을 볼 수 있습니다. 기본적으로 수당은 기본급과 정비례하니, 기본급이 늘면 수당도 늘어야한다고 노조 측은 주장합니다.""",unsafe_allow_html=True)
 st.write("")
 st.write("")
 
@@ -160,7 +196,7 @@ st.markdown("""
             """)
 
 st.markdown("""
-**그러나 서울시는 이렇게 주장합니다.** """)
+그러나 서울시는 이렇게 주장합니다. """)
 
 
 image = Image.open("이미지/서울시임금체계개편안.webp")
@@ -169,16 +205,10 @@ st.image(image, caption="서울시 임금체계 개편안", use_container_width=
 
 st.markdown("""
 
-“상여금을 기본급에 포함해서 기본급을 늘리지만, 임금 총액은 유지하겠다. 일단 기존임금을 보전한 뒤 임금인상률은 추후 논의하자 “ 
-
-
-이는 아래 표를 보면 '임금 총액을 유지한다'라는 뜻이 무엇인지 이해해볼 수 있습니다       
+상여금을 기본급에 포함해서 기본급을 늘리지만, **임금 총액은 유지**하자는 안을 제시한 것입니다. 일단 기존임금을 보전하기로 합의한 뒤, 추후에 임금인상률을 논의하자고 이야기합니다.     
            """)
-
 st.write("")
 st.write("")
-
-
 
 import streamlit as st
 import plotly.graph_objects as go
@@ -239,40 +269,129 @@ with main:
         hovertemplate='수당<extra></extra>'
     ))
 
-    # 레이아웃
+    # 레이아웃 (배경색 + 박스 테두리 추가)
     fig.update_layout(
         barmode='stack',
         title=f"임금 총액: {total_salary}만원 (기본급 {int(base_salary)} / 수당 {int(allowance)})",
         xaxis=dict(title="총 금액 (만원)", range=[0, 600]),
         yaxis=dict(title=""),
         height=300,
-        transition_duration=500
+        transition_duration=500,
+        plot_bgcolor='#fafafa',     # 내부 배경
+        paper_bgcolor='#fafafa',    # 전체 배경
+        margin=dict(l=20, r=20, t=50, b=20),
+        shapes=[
+            dict(
+                type='rect',
+                xref='paper',
+                yref='paper',
+                x0=0,
+                y0=0,
+                x1=1,
+                y1=1,
+                line=dict(color='gray', width=2),
+                layer='below'
+            )
+        ]
     )
 
     # 출력
     st.plotly_chart(fig, use_container_width=True)
 
+
 st.markdown("""
-            즉, 일단 상여금이 기본급화 된다고 하더라도, 이에 따른 수당의 변화분은 생기지 않는다는 것입니다.
+            위 그래프의 슬라이더를 움직이면, 기본급을 올리면서 임금 동결을 한다는 것이 무슨 뜻인지 이해할 수 있습니다. 한 마디로 정리하자면, 상여금이 기본급화 된다고 하더라도, 이에 따른 **수당의 변화분은 생기지 않는다**는 것입니다.
             
-            그러나 생각을 한번 해봅시다. 기본급이 올랐으면, 근로시간이 같은 이상 시급은 자연스럽게 오르게 되어 있습니다.
+            """)
+st.markdown("""
+            #### 기본급 증가와 임금 동결이 어떻게 동시에 가능한가?
+            """)
+st.markdown("""
+            생각을 한번 해봅시다. 기본급이 올랐으면, 근로시간이 같은 이상 시급은 자연스럽게 오르게 되어 있습니다.
             """)
 
+import streamlit as st
 
-image = Image.open("이미지/기본급_시급.png")  # 예: "img/salary_chart.png"
-st.image(image, caption="4시간 근로 시 기본급 총액이 인상되면, 하나의 덩어리인 시급도 함께 오릅니다", use_container_width=True)
+# 기준 근로시간
+std_hours_1 = 209
+std_hours_2 = 176
+
+############################# 텍스트 설명 (전체 폭) #############################
+
+st.markdown(
+    "기본급이 **220만원 → 330만원**으로 바뀌고, "
+    "소정근로시간이 176시간으로 고정일 때의 변화를 봅시다.<br>"
+    "**시급과 수당이 어떻게 달라질까요?**",
+    unsafe_allow_html=True
+)
+
+############################# 계산 1: 시급 × 추가근로시간 #############################
+
+left1, main1, right1 = st.columns([0.2, 5, 0.2])
+
+with main1:
+    col1, spacer, col2 = st.columns([2.2, 0.3, 1.5])
+
+    with col1:
+        selected_salary = st.radio("기본급을 선택하세요", [220, 330], horizontal=True, key="salary_case1")
+        extra_hours = st.slider("추가근로시간 (시간)", 0, 100, step=5, value=20, key="hours_case1")
+        hourly = (selected_salary * 10000) / std_hours_1
+        extra_pay = hourly * extra_hours
+
+    with col2:
+        st.markdown("#### 💡 계산 결과")
+        st.markdown(f"""
+        <div style='border:1px solid #ccc; border-radius:10px; padding:12px 16px; background-color:#f9f9f9; font-size:15px; line-height:1.6'>
+            <b>기본급:</b> {selected_salary}만원<br>
+            <b>시급:</b> {int(hourly):,} 원<br>
+            <b>수당:</b> <span style='color:green; font-size:18px'><b>{int(extra_pay):,} 원</b></span>
+        </div>
+        """, unsafe_allow_html=True)
+
+############################# 텍스트 설명 (전체 폭) #############################
 
 st.markdown("""
-            그러나 기본급이 올랐는데 임금 총액을 유지한다는 말은 곧
-            **추가 근로로 인정되는 시간**을 줄이겠다는 말과 같습니다.  
-            """)
+<br><br>
+그러나 기본급이 올랐는데 임금 총액을 유지한다는 말은 곧 **추가 근로로 인정되는 시간**을 줄이겠다는 말과 같습니다.
+""",unsafe_allow_html=True)
 
-#############################이미지#################################
+############################# 계산 2: 수당 고정일 때 근로시간 비교 #############################
 
 
+left2, main2, right2 = st.columns([0.2, 5, 0.2])
 
-image = Image.open("이미지/수당_근로시간.png")  # 예: "img/salary_chart.png"
-st.image(image, caption="수당의 변화분이 없게 된다면, 이는 곧 인정되는 시간을 줄이겠다는 뜻입니다", use_container_width=True)
+with main2:
+    target_allowance = st.slider("받고자 하는 수당 (원)", 100_000, 600_000, step=10_000, value=300_000, key="target_allow_case2")
+
+    st.markdown(f"""
+    - 소정근로시간: **{std_hours_2}시간**  
+    - 수당: **{target_allowance:,}원** (고정)
+    """)
+
+    col3, col4 = st.columns(2)
+
+    for col, salary in zip([col3, col4], [220, 330]):
+        with col:
+            hourly = (salary * 10000) / std_hours_2
+            required_hours = target_allowance / hourly
+
+            st.markdown(f"""
+            <div style='border:1px solid #ccc; border-radius:10px; padding:15px; background-color:#f9f9f9'>
+                <h5 style='text-align:center'>기본급: {salary}만원</h5>
+                <p style='font-size:16px; line-height:1.6'>
+                    💸 <b>시급:</b> {int(hourly):,} 원<br>
+                    ⏱ <b>필요 추가근로시간:</b> 
+                    <span style='color:crimson; font-size:20px'><b>{required_hours:.1f}시간</b></span>
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+
+##image = Image.open("이미지/수당_근로시간.png")  # 예: "img/salary_chart.png"
+#st.image(image, caption="수당의 변화분이 없게 된다면, 이는 곧 인정되는 시간을 줄이겠다는 뜻입니다", use_container_width=True)
+
+st.write("")
+st.write("")
 
 st.markdown("""
             시급이 올랐지만, 원래 4시간 일한 것을 3시간 일한 것과 같이 치겠다는 뜻이죠. 
