@@ -26,9 +26,9 @@ def img_to_base64(path):
         return base64.b64encode(f.read()).decode()
 
 # 이미지 불러오기
-b64_msg = img_to_base64("이미지/message.png")
-b64_many = img_to_base64("이미지/many_articles.png")
-b64_think = img_to_base64("이미지/thinking.png")
+b64_msg = img_to_base64("이미지/message_2.png")
+b64_many = img_to_base64("이미지/many_articles_2.png")
+b64_think = img_to_base64("이미지/thinking_2.png")
 
 # 세션 상태로 현재 페이지 기억하기
 if "page" not in st.session_state:
@@ -390,7 +390,7 @@ st.markdown(
 
 col1, col2, col3 = st.columns([1, 4, 1])
 with col2:
-    st.image("이미지/day_night.png", width=800)
+    st.image("이미지/day_night_2.png", width=800)
 
 
 st.markdown("""
@@ -542,7 +542,7 @@ st.markdown("""
     font-size: 0.92rem;
     color: #333;
     line-height: 1.7;
-'>2024년 버스 기사 4호봉 기준으로 기본급은 약 223만 원, 주휴·연장·야간 수당과 상여금 수당 등을 포함한 월 실수령 총액은 약 470만 원입니다.
+'>2024년 버스 기사 4호봉 기준으로 기본급은 약 220만 원, 주휴·연장·야간 수당과 상여금 수당 등을 포함한 월 실수령 총액은 약 470만 원입니다.
 </div>
 """, unsafe_allow_html=True)
 
@@ -742,7 +742,7 @@ st.markdown(
 
 col1, col2, col3 = st.columns([1, 7, 1])
 with col2:
-    st.image("이미지/conflict.png", width=900)
+    st.image("이미지/conflict_2.png", width=900)
 
 
 st.markdown(
@@ -1565,7 +1565,7 @@ for i, (label, value) in enumerate(components.items()):
 fig.update_layout(
     barmode='stack',
     height=250,
-    title="버스기사 임금구조표(5호봉 기준)",
+    title="버스기사 임금구조표(4호봉 기준)",
     xaxis=dict(title="총 임금 (만원)", range=[0, sum(components.values()) + 100]),
     yaxis=dict(showticklabels=False),
     margin=dict(l=20, r=20, t=40, b=20),
@@ -1711,7 +1711,7 @@ for i, (label, value) in enumerate(components.items()):
 fig.update_layout(
     barmode='stack',
     height=250,
-    title="버스기사 임금구조표(5호봉 기준)",
+    title="버스기사 임금구조표(4호봉 기준)",
     xaxis=dict(title="총 임금 (만원)", range=[0, sum(components.values()) + 100]),
     yaxis=dict(showticklabels=False),
     margin=dict(l=20, r=20, t=40, b=20),
@@ -1752,7 +1752,7 @@ st.markdown("""
             """)
 
 st.markdown("""
-            **신의성실의 원칙이란?**
+            신의성실의 원칙이란?**
 
 ```
 민법 제2조 (신의성실)
