@@ -1644,7 +1644,7 @@ st.markdown("""
 
 
 
-
+st.write("")
 st.markdown("""
             **그러나, 이제 대법원 판결이 적용되면?**
             
