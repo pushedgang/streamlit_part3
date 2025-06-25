@@ -573,41 +573,45 @@ st.markdown("""
 
 st.markdown("#### 변화 전후 수당 비교")
 
-# 1) session_state 초기화
-if 'overtime' not in st.session_state:
-    st.session_state.overtime = 75
+# 1) 슬라이더 먼저 선언
+slider_val = st.slider(
+    "추가 근무 시간",
+    min_value=75,    # 최소값 75
+    max_value=130,   # 최대값 130
+    value=75,        # 초기값도 75
+    key='overtime'
+)
 
-# 2) 내부 로직에 사용할 값 가져오기
-slider_val = st.session_state.overtime
+st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
 
-# 카테고리 & 데이터
+# 2) 카테고리 및 데이터 설정
 labels      = ['기본급', '상여금', '수당']
-base_pre  = [220, 110, 0]  # 변화 전
-base_post = [220, 110, 0]  # 변화 후
+base_pre    = [220, 110, 0]  # 변화 전
+base_post   = [220, 110, 0]  # 변화 후
 
 # 변화 전 수당: slider 비율로 0~110
 pre_allowance  = int(slider_val * 110 / 130)
 # 변화 후 수당: slider 비율로 0~200
 post_allowance = int(slider_val * 200 / 130)
 
-# 스택형 값 리스트 완성
+# 최종 스택형 데이터 구성
 values_pre  = [base_pre[0],  base_pre[1],  pre_allowance]
 values_post = [base_post[0], base_post[1], post_allowance]
 
-# 그라데이션 컬러맵
+# 그라데이션 컬러 생성
 base_rgb  = np.array(to_rgb('#295498'))
 light_rgb = base_rgb + (1 - base_rgb) * 0.5
 cmap      = LinearSegmentedColormap.from_list('grad', [base_rgb, light_rgb])
 colors    = [cmap(0.0), cmap(0.5), cmap(1.0)]
 
-# 막대 위치 & 너비
+# 막대 위치와 너비
 positions = [0, 1]
 bar_width = 0.6
 
-# Figure 생성
+# 3) 그래프 생성
 fig, ax = plt.subplots(figsize=(6, 3))
 
-# 두 개 스택형 막대 그리기
+# 스택형 막대 그리기
 for pos, vals in zip(positions, [values_pre, values_post]):
     bottom = 0
     for val, color, label in zip(vals, colors, labels):
@@ -632,26 +636,15 @@ for pos, vals in zip(positions, [values_pre, values_post]):
         )
         bottom += val
 
-# 축 레이블 설정
+# 축 설정
 ax.set_xticks(positions)
-ax.set_xticklabels(['변화 전', '변화 후'])
-ax.set_ylabel('금액 (만원)')
-
-# y축을 0~600으로 고정하고, 100단위로 눈금 표시
+ax.set_xticklabels(['변화 전', '변화 후'], fontproperties=font_prop)
+ax.set_ylabel('금액 (만원)', fontproperties=font_prop)
 ax.set_ylim(0, 600)
 ax.set_yticks(range(0, 601, 100))
 
 plt.tight_layout()
 st.pyplot(fig)
-
-# 4) 그 아래에 슬라이더
-slider_val = st.slider(
-    "추가 근무 시간",
-    min_value=75,    # 최소값을 75로
-    max_value=130,   # 최대값 그대로
-    value=75,        # 기본값도 75로 설정
-    key='overtime'
-)
 
 st.write(f"###### ⏰월 추가 근무 시간이 {slider_val}시간일 때")
 
